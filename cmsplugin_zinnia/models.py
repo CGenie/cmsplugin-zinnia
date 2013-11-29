@@ -47,6 +47,10 @@ class LatestEntriesPlugin(CMSPlugin):
     offset = models.IntegerField(
         _('offset'), default=0,
         help_text=_('Should I start from first (offset=0) or later entries'))
+    split = models.PositiveIntegerField(
+        blank=False, null=False, default=1,
+        help_text=_('Split this feed returning every n-th element '
+               '(1 is to do no split)'))
     template_to_render = models.CharField(
         _('template'), blank=True,
         max_length=250, choices=TEMPLATES,

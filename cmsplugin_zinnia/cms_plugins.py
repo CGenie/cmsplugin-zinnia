@@ -31,6 +31,7 @@ class CMSLatestEntriesPlugin(CMSPluginBase):
     filter_horizontal = ['categories', 'authors', 'tags']
     fieldsets = (
         (None, {'fields': ('offset',
+                           'split',
                            'number_of_entries',
                            'template_to_render')}),
         (_('Filters'), {'fields': (('featured', 'categories', 'subcategories'),
@@ -73,6 +74,8 @@ class CMSLatestEntriesPlugin(CMSPluginBase):
             entries = entries[instance.offset:]
         if instance.number_of_entries:
             entries = entries[:instance.number_of_entries]
+        if instance.split is not None:
+            entries = entries[::instance.split]
         context.update({'entries': entries,
                         'object': instance,
                         'placeholder': placeholder})
