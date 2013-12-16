@@ -12,7 +12,7 @@ from zinnia.models import Entry
 from zinnia.models import Author
 from zinnia.models import Category
 from zinnia.managers import tags_published
-from cmsplugin_zinnia.settings import HIDE_ENTRY_MENU
+from cmsplugin_zinnia.settings import HIDE_ENTRY_MENU, APP_MENUS
 
 
 class EntryMenu(CMSAttachMenu):
@@ -127,8 +127,11 @@ class EntryModifier(Modifier):
         return nodes
 
 
-menu_pool.register_menu(EntryMenu)
-menu_pool.register_menu(CategoryMenu)
-menu_pool.register_menu(AuthorMenu)
-menu_pool.register_menu(TagMenu)
+for klass in [EntryMenu, CategoryMenu, AuthorMenu, TagMenu]:
+    if klass.__class__.__name__ in APP_MENUS:
+        menu_pool.register_menu(klass)
+#menu_pool.register_menu(EntryMenu)
+#menu_pool.register_menu(CategoryMenu)
+#menu_pool.register_menu(AuthorMenu)
+#menu_pool.register_menu(TagMenu)
 menu_pool.register_modifier(EntryModifier)
